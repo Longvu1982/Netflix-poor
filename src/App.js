@@ -1,6 +1,11 @@
 import "./App.css";
 import HomePage from "./home/HomePage";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import SinglePage from "./components/watch/SinglePage";
 import LoginPage from "./components/login";
 import LogoutPage from "./components/register";
@@ -16,12 +21,13 @@ function App() {
       <Router>
         {currentUser.email ? (
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route
               path="/upcomming"
               element={<Upcomming items={upcome} title="Upcomming" />}
             />
             <Route path="/singlepage/:id" element={<SinglePage />} />
-            <Route path="*" element={<Navigate to={"/upcomming"} />} />
+            <Route path="*" element={<Navigate to={"/"} />} />
           </Routes>
         ) : (
           <Routes>

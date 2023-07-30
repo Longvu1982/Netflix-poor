@@ -110,6 +110,44 @@
 .mragin {
   margin-top: 50%;
 }
+
+.submit__btn--container {
+  position: relative;
+  width: 200px;
+  margin-right: 15px;
+  height: 50px;
+  margin-block: 20px;
+  background-color: #ff0900;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 100%;
+    background-color: #414141be;
+    transition: all 0.3s ease-in-out;
+  }
+  &:hover {
+    background-color: transparent;
+    &::before {
+      right: 0;
+    }
+  }
+  button {
+    position: absolute;
+    inset: 0;
+    color: #fff;
+    font-size: 0.9rem;
+    background-color: unset;
+    cursor: pointer;
+  }
+  
+}
+
 @media only screen and (max-width: 768px) {
   .homeContainer h1 {
     font-size: 50px;

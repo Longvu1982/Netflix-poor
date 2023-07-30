@@ -1,6 +1,6 @@
 import React from "react";
 import HomeCard from "./HomeCard";
-import "./home.css";
+import "./home.scss";
 
 const homeData = {
     id: 1,
