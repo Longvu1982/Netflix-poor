@@ -8,13 +8,11 @@ import useUserStore from "../../store/useUser";
 function LoginPage({ type, extra, navigateTo }) {
     // handle navigate
     const navigate = useNavigate();
-
     // login and register
     const usernameRef = useRef();
     const passRef = useRef();
 
     const userAuth = useUserStore();
-    console.log(userAuth)
 
     const handleLogIn = (e) => {
         e.preventDefault();
@@ -22,8 +20,9 @@ function LoginPage({ type, extra, navigateTo }) {
             user: usernameRef.current.value,
             password: passRef.current.value,
         }).then((res) => {
-            userAuth.setToken(res.data.accessToken)
-            console.log(res.data);
+            userAuth.setUser(res.data);
+            localStorage.setItem("user", JSON.stringify(res.data));
+            navigate("/upcomming");
         });
     };
 

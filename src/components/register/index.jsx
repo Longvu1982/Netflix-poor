@@ -21,10 +21,9 @@ function RegisterPage() {
             email: email,
             password: password,
             phoneNumber: phone,
-        }).then((res) => {
-            console.log(res.data);
-        }, );
-        navigate("/login");
+        }).then((_res) => {
+            navigate("/login");
+        });
     };
 
     return (
