@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import SinglePage from "./components/watch/SinglePage";
 import LoginPage from "./components/login";
-import LogoutPage from "./components/register";
 import { upcome } from "./dummyData";
 import RegisterPage from "./components/register";
 import Upcomming from "./components/upcoming/Upcomming";
@@ -19,7 +18,7 @@ function App() {
   return (
     <>
       <Router>
-        {currentUser.email ? (
+        {currentUser.token ? (
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route

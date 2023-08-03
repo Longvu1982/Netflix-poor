@@ -9,7 +9,7 @@ const HomeCard = ({
   const currentUser = useUserStore();
   const navigate = useNavigate();
   const handleClickPlay = () => {
-    if (currentUser.email) navigate("/upcomming");
+    if (currentUser.token) navigate("/upcomming");
     else navigate("/login");
   };
   return (
