@@ -7,32 +7,61 @@ import { upcome } from "./dummyData";
 import RegisterPage from "./components/register";
 import MainPage from "./components/main/Main";
 import useUserStore from "./store/useUser";
-import { useEffect, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import HomeLayout from "./layouts/HomeLayout";
 
 function App() {
     const currentUser = useUserStore();
+    const [localStorageUser, setLocalStorageUser] = useState(localStorage.getItem("user"));
+
     useEffect(() => {
-        const localStorageUser = localStorage.getItem("user");
         if (localStorageUser) {
             currentUser.setUser(JSON.parse(localStorageUser));
         }
-    }, [currentUser.accessToken]);
+    }, [localStorageUser]);
+
+    useEffect(() => {
+        window.addEventListener("storage", handleStorageChange);
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
+    const handleStorageChange = () => {
+        setLocalStorageUser(localStorage.getItem("user"));
+    };
+    console.log(localStorageUser);
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <Router>
-                {currentUser.accessToken ? (
+                {JSON.parse(localStorageUser ?? "{}").accessToken ? (
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/upcomming" element={<MainPage items={upcome} title="Upcomming" />} />
-                        <Route path="/singlepage/:id" element={<SinglePage />} />
-                        {/* <Route path="*" element={<Navigate to={"/"} />} /> */}
+                        <Route index element={<HomePage />} />
+                        <Route path="/" element={<HomeLayout />}>
+                            <Route path="/upcomming" element={<MainPage items={upcome} title="Upcomming" />} />
+                            <Route path="/singlepage/:id" element={<SinglePage />} />
+                            <Route path="*" element={<Navigate to={"/"} />} />
+                        </Route>
                     </Routes>
                 ) : (
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
-                        <Route path="*" element={<Navigate to={"/"} />} />
+                        <Route path="*" element={<Navigate to={"/login"} />} />
                     </Routes>
                 )}
                 {/* <Footer /> */}

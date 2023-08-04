@@ -60,13 +60,6 @@ const MainPage = ({ items, title }) => {
         <div className="main-page">
             <h1>BUSINESS PROPOSAL BEHIDE THE SCENE</h1>
             <div className="video-container">
-                {/* <video
-                    width="100%"
-                    height="100%"
-                    controls
-                    oncontextmenu={false}
-                    src="https://rr2---sn-npoe7nes.c.drive.google.com/videoplayback?expire=1691095671&ei=N9rLZMGQFo3Bir4PvMaqmAY&ip=116.96.47.21&cp=QVROU0FfVFZVQlhPOm5iR1VocXpEbkNrVzhPcmNxUnU4S1BGN1RoYnREcUcxaF9LcXZqY0xZRGI&id=4edc143cc8fdee0f&itag=18&source=webdrive&requiressl=yes&mh=8G&mm=32&mn=sn-npoe7nes&ms=su&mv=m&mvi=2&pl=23&ttl=transient&susc=dr&driveid=1Zn5RVdf2qViuD7GXZCXG53HqVtHAzh-M&app=explorer&mime=video/mp4&vprv=1&prv=1&dur=755.484&lmt=1691042228971350&mt=1691080844&subapp=DRIVE_WEB_FILE_VIEWER&txp=0001224&sparams=expire,ei,ip,cp,id,itag,source,requiressl,ttl,susc,driveid,app,mime,vprv,prv,dur,lmt&sig=AOq0QJ8wRQIgfSGxx0LN--0rZXai6vkbJlHq6FHgH9s8siusTXJd2FoCIQCityjPab_Ay7d9SGLb5p3Pz9_A0VhxmefB3HsDTHxD0g==&lsparams=mh,mm,mn,ms,mv,mvi,pl&lsig=AG3C_xAwRAIgBk1TbomvCu-XEjtMALu13McVK9CSlIL7BS-ZrbEWND8CICMv0VEHVZV8M9cSdSxD0ZuXnfTStC65NqJqV0wqB3d-&cpn=9UYNcjoB895Ug_tZ&c=WEB_EMBEDDED_PLAYER&cver=1.20230730."
-                ></video> */}
                 <iframe
                     frameBorder={0}
                     title="ep1"
