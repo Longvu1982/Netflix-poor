@@ -28,20 +28,23 @@ function HeaderNav() {
     return (
         <div className={`nav ${!showNav && "nav__black"}`}>
             <div className="nav__contents">
-                <img onClick={() => navigate("/")} className="nav__logo" src={Image.fake_logo} alt="main logo" />
+                <h1>Business Proposal</h1>
                 <div className="nav__avat">
                     <img onClick={() => setProfile(!profile)} src={Image.avatLogo} alt="" />
                     {profile && (
                         <div className="profile-menu">
-                            <h1>{user.email}</h1>
+                            <div>
+                                <h1>{user.email}</h1>
+                                <h1>{user.userName}</h1>
+                            </div>
                             <div className="profile_btns">
                                 <button>
                                     <span
                                         onClick={() => {
-                                            navigate("/myfavlist");
+                                            navigate("/");
                                         }}
                                     >
-                                        My list
+                                        Home
                                     </span>
                                 </button>
                                 <button

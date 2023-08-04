@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Image from "../../Images/Image";
 import "./index.scss";
@@ -8,32 +8,33 @@ import { toast } from "react-toastify";
 import { StatusType } from "../../enum";
 import "react-toastify/dist/ReactToastify.css";
 
-function LoginPage({ type, extra, navigateTo }) {
+function LoginPage() {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     // handle navigate
     const navigate = useNavigate();
     // login and register
-    const usernameRef = useRef();
-    const passRef = useRef();
 
     const userAuth = useUserStore();
 
-    const notify = () =>
-        toast.error("Incorrect username or password!", {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
+    const handleValidation = () => {
+        if (!username || !password) {
+            toast.error("Please fill in all fields.");
+            return false;
+        }
+        if (password.length < 8) {
+            toast.error("Password must be at least 8 characters long.");
+            return false;
+        }
+        return true;
+    };
 
     const handleLogIn = (e) => {
         e.preventDefault();
+        if (!handleValidation()) return;
         AxiosInstance.post("api/login", {
-            user: usernameRef.current.value,
-            password: passRef.current.value,
+            user: username,
+            password: password,
         }).then((res) => {
             const result = res.data;
             if (result.status === StatusType.Success) {
@@ -42,7 +43,7 @@ function LoginPage({ type, extra, navigateTo }) {
                 dispatchEvent(new Event("storage"));
                 navigate("/upcomming");
             } else if (result.status === StatusType.Failed) {
-                notify();
+                toast.error(result.description)
             }
         });
     };
@@ -52,8 +53,8 @@ function LoginPage({ type, extra, navigateTo }) {
             <div className="form__container">
                 <form action="">
                     <h1 className="title">Sign-in</h1>
-                    <input ref={usernameRef} className="user_email" type="text" placeholder="username" />
-                    <input ref={passRef} className="user_password" type="password" placeholder="Password" />
+                    <input value={username} onChange={(e) => setUsername(e.target.value)} className="user_email" type="text" placeholder="username" />
+                    <input value={password} onChange={(e) => setPassword(e.target.value)} className="user_password" type="password" placeholder="Password" />
 
                     <div className="submit__btn--container">
                         <button type="submit" onClick={handleLogIn}>

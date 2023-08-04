@@ -4,6 +4,9 @@
     overflow-y: scroll;
     padding: 60px;
     padding-top: 100px;
+    @media screen and (max-width: 768px) {
+        padding: 20px;
+    }
     h1 {
         margin-bottom: 20px;
     }
@@ -23,6 +26,8 @@
     background-repeat: no-repeat;
     background-blend-mode: multiply;
     .video-container {
+        position: relative;
+        margin-inline: auto;
         width: 60%;
         // max-width: 600px;
         aspect-ratio: 16/9;
@@ -34,6 +39,17 @@
         }
     }
 }
-.abc {
-    // aspect-ratio: 16/9;
+.all-movie-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    @media screen and (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (min-width: 1200px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (min-width: 1368px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

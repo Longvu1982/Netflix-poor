@@ -1,25 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Ucard.scss";
+import Image from "../../Images/Image";
 
-const Ucard = ({ item: { id, cover, name, time } }) => {
-  return (
-    <>
-      <div className="MovieBox">
-        <div className="img">
-          <img src={cover} alt="" />
-        </div>
-        <div className="text">
-          <h3>{name}</h3>
-          <span>{time}</span> <br />
-          {/*<Link to={`/singlepage/${id}`}>*/}
-          <button className="primary-btn">
-            <i className="fa fa-play"></i> PLAY NOW
-          </button>
-          {/*</Link>*/}
-        </div>
-      </div>
-    </>
-  );
+const Ucard = ({ item: { description, episode, image, name }, setEpisode }) => {
+    return (
+        <>
+            <div className="MovieBox" onClick={() => setEpisode(episode)}>
+                <div className="img">
+                    <img src={image} alt="" />
+                </div>
+                <div className="text">
+                    <h3>
+                        {`EP.${episode}.`} {name}
+                    </h3>
+                    {/*<Link to={`/singlepage/${id}`}>*/}
+                    <button className="primary-btn">
+                        <i className="fa fa-play"></i> PLAY NOW
+                    </button>
+                    {/*</Link>*/}
+                </div>
+            </div>
+        </>
+    );
 };
 
 export default Ucard;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Ucard from "./Ucard";
 import Slider from "react-slick";
@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AxiosInstance from "../../axios/axios";
 import ReactPlayer from "react-player";
+import PageLoading from "../Loading/PageLoading";
+import SquareSkeleton from "../skeleton";
 
 const SampleNextArrow = (props) => {
     const { onClick } = props;
@@ -29,6 +31,12 @@ const SamplePrevArrow = (props) => {
     );
 };
 const MainPage = ({ items, title }) => {
+    const [movieList, setMovieList] = useState([]);
+    const [episode, setEpisode] = useState(1);
+    const [currentMovieSrc, setCurrentMovieSrc] = useState(1);
+    const [isLoading, setLoading] = useState(false);
+    const [isMovieLoading, setMovieLoading] = useState(false);
+    const [isViewAll, setViewAll] = useState(false);
     const settings = {
         dots: false,
         speed: 500,
@@ -37,6 +45,12 @@ const MainPage = ({ items, title }) => {
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
         responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                },
+            },
             {
                 breakpoint: 1024,
                 settings: {
@@ -53,34 +67,69 @@ const MainPage = ({ items, title }) => {
     };
 
     useEffect(() => {
-        // AxiosInstance.get("api/getAllEpisode").then(console.log);
-        // AxiosInstance.get(`api/getEpisode?episode=${1}&type=${1}`).then(console.log);
+        setLoading(true);
+        AxiosInstance.get("api/getAllEpisode")
+            .then((res) => {
+                setMovieList(res.data);
+            })
+            .finally(() => setTimeout(() => setLoading(false), 1000));
     }, []);
-    return (
+    useEffect(() => {
+        setMovieLoading(true);
+        AxiosInstance.get(`api/getEpisode?episode=${episode}&type=${1}`)
+            .then((res) => {
+                const result = res.data;
+                setCurrentMovieSrc(result.url);
+            })
+            .finally(() => setMovieLoading(false));
+    }, [episode]);
+
+    return isLoading ? (
+        <PageLoading />
+    ) : (
         <div className="main-page">
-            <h1>BUSINESS PROPOSAL BEHIDE THE SCENE</h1>
+            {/* <h1>BUSINESS PROPOSAL BEHIDE THE SCENE</h1> */}
             <div className="video-container">
-                <iframe
-                    style={{border: 0}}
-                    title="ep1"
-                    src="https://drive.google.com/file/d/1Zn5RVdf2qViuD7GXZCXG53HqVtHAzh-M/preview"
-                    width="100%"
-                    height="100%"
-                    allowFullScreen
-                    allow="autoplay"
-                ></iframe>
+                {!isMovieLoading ? (
+                    <iframe
+                        onLoad={() => setMovieLoading(false)}
+                        style={{ border: 0 }}
+                        title="ep1"
+                        src={currentMovieSrc}
+                        width="100%"
+                        height="100%"
+                        allowFullScreen
+                        allow="autoplay"
+                    ></iframe>
+                ) : (
+                    <SquareSkeleton />
+                )}
             </div>
             <section className="upcome">
                 <div className="heading flexSB">
                     <h1>{title}</h1>
-                    <Link to="/">View All</Link>
+                    <span
+                        onClick={() => {
+                            setViewAll(!isViewAll);
+                        }}
+                    >
+                        {`View${isViewAll ? " slide" : " all"}`}
+                    </span>
                 </div>
                 <div className="content">
-                    <Slider {...settings}>
-                        {items.map((item) => (
-                            <Ucard key={item.id} item={item} />
-                        ))}
-                    </Slider>
+                    {isViewAll ? (
+                        <div className="all-movie-container">
+                            {movieList.map((item) => (
+                                <Ucard key={item.id} item={item} setEpisode={setEpisode} />
+                            ))}
+                        </div>
+                    ) : (
+                        <Slider {...settings}>
+                            {movieList.map((item) => (
+                                <Ucard key={item.id} item={item} setEpisode={setEpisode} />
+                            ))}
+                        </Slider>
+                    )}
                 </div>
             </section>
         </div>
