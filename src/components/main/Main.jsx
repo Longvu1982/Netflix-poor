@@ -61,7 +61,7 @@ const MainPage = ({ items, title }) => {
             <h1>BUSINESS PROPOSAL BEHIDE THE SCENE</h1>
             <div className="video-container">
                 <iframe
-                    frameBorder={0}
+                    style={{border: 0}}
                     title="ep1"
                     src="https://drive.google.com/file/d/1Zn5RVdf2qViuD7GXZCXG53HqVtHAzh-M/preview"
                     width="100%"

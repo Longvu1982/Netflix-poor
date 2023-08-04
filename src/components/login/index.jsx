@@ -6,7 +6,7 @@ import AxiosInstance from "../../axios/axios";
 import useUserStore from "../../store/useUser";
 import { toast } from "react-toastify";
 import { StatusType } from "../../enum";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 function LoginPage({ type, extra, navigateTo }) {
     // handle navigate
@@ -39,7 +39,7 @@ function LoginPage({ type, extra, navigateTo }) {
             if (result.status === StatusType.Success) {
                 userAuth.setUser(res.data);
                 localStorage.setItem("user", JSON.stringify(res.data));
-                dispatchEvent(new Event("storage"))
+                dispatchEvent(new Event("storage"));
                 navigate("/upcomming");
             } else if (result.status === StatusType.Failed) {
                 notify();
@@ -59,6 +59,9 @@ function LoginPage({ type, extra, navigateTo }) {
                         <button type="submit" onClick={handleLogIn}>
                             Sign in
                         </button>
+                    </div>
+                    <div className="form__extra">
+                        <Link>Forgot your password?</Link>
                     </div>
                     <div className="form__extra">
                         <span>Don't have an account?</span>

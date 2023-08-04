@@ -27,7 +27,7 @@ function RegisterPage() {
     };
 
     return (
-        <div style={{ backgroundImage: `url(${Image.login_bgr})` }} className="login__form">
+        <div style={{ backgroundImage: `url(${Image.login_bgr})` }} className="register__form">
             <div className="form__container">
                 <form action="">
                     <h1 className="title">Register</h1>

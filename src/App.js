@@ -31,7 +31,6 @@ function App() {
     const handleStorageChange = () => {
         setLocalStorageUser(localStorage.getItem("user"));
     };
-    console.log(localStorageUser);
     return (
         <>
             <ToastContainer
