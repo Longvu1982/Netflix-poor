@@ -4,6 +4,7 @@
     overflow-y: scroll;
     padding: 60px;
     padding-top: 100px;
+    padding-bottom: 0;
     @media screen and (max-width: 768px) {
         padding: 20px;
     }
@@ -11,7 +12,7 @@
         margin-bottom: 20px;
     }
     &::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
     }
 
     &::-webkit-scrollbar-thumb {
@@ -19,7 +20,7 @@
     }
 
     &::-webkit-scrollbar-track {
-        background-color: black;
+        background-color: rgba(255, 0, 0, 0.122);
     }
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)), url(../../../public/images/business-proposal-2-res.png);
     background-size: cover;
@@ -33,9 +34,30 @@
         aspect-ratio: 16/9;
         // height: auto;
         background-color: black;
-        margin-bottom: 30px;
+        margin-bottom: 10px;
         @media screen and (max-width: 1200px) {
             width: 100%;
+        }
+    }
+    .video-name {
+        font-size: 22px;
+        width: 60%;
+        margin-inline: auto;
+        margin-bottom: 30px;
+    }
+    footer {
+        margin-top: 200px;
+        background-color: black;
+        padding-block: 10px;
+        text-align: center;
+        margin-inline: -60px;
+        span:nth-child(1) {
+            color: red;
+        }
+        span {
+            display: inline-block;
+            line-height: 10px;
+            vertical-align: middle;
         }
     }
 }

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Ucard from "./Ucard";
 import Slider from "react-slick";
 import "./main.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AxiosInstance from "../../axios/axios";
-import ReactPlayer from "react-player";
 import PageLoading from "../Loading/PageLoading";
 import SquareSkeleton from "../skeleton";
 
@@ -39,8 +37,9 @@ const MainPage = ({ items, title }) => {
     const [isViewAll, setViewAll] = useState(false);
     const settings = {
         dots: false,
-        speed: 500,
+        speed: 1000,
         slidesToShow: 4,
+        autoplay: true,
         infinite: true,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
@@ -72,14 +71,14 @@ const MainPage = ({ items, title }) => {
             .then((res) => {
                 setMovieList(res.data);
             })
-            .finally(() => setTimeout(() => setLoading(false), 1000));
+            .finally(() => setTimeout(() => setLoading(false), 1500));
     }, []);
     useEffect(() => {
         setMovieLoading(true);
         AxiosInstance.get(`api/getEpisode?episode=${episode}&type=${1}`)
             .then((res) => {
                 const result = res.data;
-                setCurrentMovieSrc(result.url);
+                setCurrentMovieSrc(result);
             })
             .finally(() => setMovieLoading(false));
     }, [episode]);
@@ -95,7 +94,7 @@ const MainPage = ({ items, title }) => {
                         onLoad={() => setMovieLoading(false)}
                         style={{ border: 0 }}
                         title="ep1"
-                        src={currentMovieSrc}
+                        src={currentMovieSrc.url}
                         width="100%"
                         height="100%"
                         allowFullScreen
@@ -104,6 +103,10 @@ const MainPage = ({ items, title }) => {
                 ) : (
                     <SquareSkeleton />
                 )}
+            </div>
+            <div className="video-name">
+                <span style={{ color: "red", fontWeight: 500 }}>EPISODE {currentMovieSrc.episode}</span>
+                <span> {currentMovieSrc.name}</span>
             </div>
             <section className="upcome">
                 <div className="heading flexSB">
@@ -132,6 +135,9 @@ const MainPage = ({ items, title }) => {
                     )}
                 </div>
             </section>
+            <footer>
+                <span>@Copyright</span> <span>Business Proposal, 2023</span>
+            </footer>
         </div>
     );
 };

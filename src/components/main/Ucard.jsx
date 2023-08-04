@@ -12,7 +12,8 @@ const Ucard = ({ item: { description, episode, image, name }, setEpisode }) => {
                 </div>
                 <div className="text">
                     <h3>
-                        {`EP.${episode}.`} {name}
+                        <span>EP.{episode}.</span>{" "}
+                        <span>{name}</span>
                     </h3>
                     {/*<Link to={`/singlepage/${id}`}>*/}
                     <button className="primary-btn">
