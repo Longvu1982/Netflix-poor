@@ -19,51 +19,48 @@ const HomeCard = ({
           <img src={cover} alt="background" />
         </div>
         <div className="content flex">
-          <div className="details row">
-            <h1>{name}</h1>
-            <div className="rating flex">
-              <div className="rate">
-                <i className="fas fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star"></i>
-                <i className="fa fa-star-half"></i>
+          <div className="first-section">
+            <div className="details row">
+              <h1>{name}</h1>
+              <div className="rating flex">
+                <div className="rate">
+                  <i className="fas fa-star"></i>
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star"></i>
+                  <i className="fa fa-star-half"></i>
+                </div>
+                <label>{rating}(IMDB)</label>
+                <label>{time}</label>
               </div>
-              <label>{rating}(IMDB)</label>
-              <label>{time}</label>
+              <p className="home-text">{desc}</p>
             </div>
-            <p>{desc}</p>
-            <div
-              className="cast"
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              <div className="submit__btn--container">
-                <button
-                  onClick={handleClickPlay}
-                >
-                  <i className="fas fa-play"></i> PLAY NOW
+            <div className="palyButton row">
+              <a
+                href={`https://www.youtube.com/watch?v=mh4R-WXRhQo`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button>
+                  <div className="img">
+                    <img src="./images/play-button.png" alt="" />
+                    <img src="./images/play.png" className="change" alt="" />
+                  </div>
+                  WATCH TRAILER
                 </button>
-              </div>
-              <h4>
-                <span>Tags </span>
-                {tags}
-              </h4>
+              </a>
             </div>
           </div>
-          <div className="palyButton row">
-            <a
-              href={`https://www.youtube.com/watch?v=mh4R-WXRhQo`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <button>
-                <div className="img">
-                  <img src="./images/play-button.png" alt="" />
-                  <img src="./images/play.png" className="change" alt="" />
-                </div>
-                WATCH TRAILER
+          <div className="cast">
+            <div className="submit__btn--container">
+              <button onClick={handleClickPlay}>
+                <i className="fas fa-play"></i> PLAY NOW
               </button>
-            </a>
+            </div>
+            <h4>
+              <span>Tags </span>
+              {tags}
+            </h4>
           </div>
         </div>
       </div>
