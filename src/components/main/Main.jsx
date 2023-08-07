@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick-theme.css";
 import AxiosInstance from "../../axios/axios";
 import PageLoading from "../Loading/PageLoading";
 import SquareSkeleton from "../skeleton";
+import { Player } from "react-tuby";
+import ReactPlayer from "react-player";
 
 const SampleNextArrow = (props) => {
     const { onClick } = props;
@@ -90,16 +92,14 @@ const MainPage = ({ items, title }) => {
             {/* <h1>BUSINESS PROPOSAL BEHIDE THE SCENE</h1> */}
             <div className="video-container">
                 {!isMovieLoading ? (
-                    <iframe
-                        onLoad={() => setMovieLoading(false)}
-                        style={{ border: 0 }}
-                        title="ep1"
-                        src={currentMovieSrc.url}
+                    <video
+                        controls
+                        onContextMenu={(e) => e.preventDefault()}
+                        controlsList="nodownload"
                         width="100%"
                         height="100%"
-                        allowFullScreen
-                        allow="autoplay"
-                    ></iframe>
+                        src={currentMovieSrc.souceVideo?.find((item) => item.id === "1080p")?.url}
+                    ></video>
                 ) : (
                     <SquareSkeleton />
                 )}
