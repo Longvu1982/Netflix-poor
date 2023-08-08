@@ -10,6 +10,8 @@ import useUserStore from "./store/useUser";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import HomeLayout from "./layouts/HomeLayout";
+import LoginForAdmin from "./components/loginadmin/inex";
+import AdminPage from "./components/adminpage";
 
 function App() {
     const currentUser = useUserStore();
@@ -46,23 +48,27 @@ function App() {
                 theme="dark"
             />
             <Router>
-                {JSON.parse(localStorageUser ?? "{}").accessToken ? (
-                    <Routes>
-                        <Route index element={<HomePage />} />
-                        <Route path="/" element={<HomeLayout />}>
-                            <Route path="/upcomming" element={<MainPage items={upcome} title="Upcomming" />} />
-                            <Route path="/singlepage/:id" element={<SinglePage />} />
-                            <Route path="*" element={<Navigate to={"/"} />} />
-                        </Route>
-                    </Routes>
-                ) : (
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        <Route path="/register" element={<RegisterPage />} />
-                        <Route path="*" element={<Navigate to={"/login"} />} />
-                    </Routes>
-                )}
+                <Routes>
+                    <Route path="/login-admin" element={<LoginForAdmin />} />
+                    {JSON.parse(localStorageUser ?? "{}").role === 1 && <Route path="/admin" element={<AdminPage />} />}
+                    {JSON.parse(localStorageUser ?? "{}").accessToken ? (
+                        <>
+                            <Route index element={<HomePage />} />
+                            <Route path="/" element={<HomeLayout />}>
+                                <Route path="/upcomming" element={<MainPage items={upcome} title="Upcomming" />} />
+                                <Route path="/singlepage/:id" element={<SinglePage />} />
+                                <Route path="*" element={<Navigate to={"/"} />} />
+                            </Route>
+                        </>
+                    ) : (
+                        <>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/login" element={<LoginPage />} />
+                            <Route path="/register" element={<RegisterPage />} />
+                            <Route path="*" element={<Navigate to={"/login"} />} />
+                        </>
+                    )}
+                </Routes>
                 {/* <Footer /> */}
             </Router>
         </>
