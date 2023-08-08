@@ -34,7 +34,7 @@ function HeaderNav() {
                     {profile && (
                         <div className="profile-menu">
                             <div>
-                                <h1>{user.email}</h1>
+                                <h1>{user.facebookName}</h1>
                                 <h1>{user.userName}</h1>
                             </div>
                             <div className="profile_btns">
