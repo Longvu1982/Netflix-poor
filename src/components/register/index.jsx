@@ -42,7 +42,7 @@ function RegisterPage() {
             return false;
         }
 
-        if (!/^(https?:\/\/)?(www\.)?facebook\.com\/[a-zA-Z0-9.]+\/?$/i.test(facebookLink.trim())) {
+        if (!/^(https?:\/\/)?(www\.)?facebook\.com\/?/.test(facebookLink.trim())) {
             toast.error("Invalid Facebook link");
             return false;
         }
