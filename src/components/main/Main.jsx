@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Ucard from "./Ucard";
 import Slider from "react-slick";
 import "./main.scss";
@@ -37,6 +37,7 @@ const MainPage = ({ items, title }) => {
     const [isLoading, setLoading] = useState(false);
     const [isMovieLoading, setMovieLoading] = useState(false);
     const [isViewAll, setViewAll] = useState(false);
+    const scrollRef = useRef();
     const settings = {
         dots: false,
         speed: 1000,
@@ -66,7 +67,10 @@ const MainPage = ({ items, title }) => {
             },
         ],
     };
-
+    const handleSetEpisode = (ep) => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+        setEpisode(ep)
+    };
     useEffect(() => {
         setLoading(true);
         AxiosInstance.get("api/getAllEpisode")
@@ -90,6 +94,7 @@ const MainPage = ({ items, title }) => {
     ) : (
         <div className="main-page">
             {/* <h1>BUSINESS PROPOSAL BEHIDE THE SCENE</h1> */}
+            <div ref={scrollRef} />
             <div className="video-container">
                 {!isMovieLoading ? (
                     <video
@@ -123,13 +128,13 @@ const MainPage = ({ items, title }) => {
                     {isViewAll ? (
                         <div className="all-movie-container">
                             {movieList.map((item) => (
-                                <Ucard key={item.id} item={item} setEpisode={setEpisode} />
+                                <Ucard key={item.id} item={item} setEpisode={handleSetEpisode} />
                             ))}
                         </div>
                     ) : (
                         <Slider {...settings}>
                             {movieList.map((item) => (
-                                <Ucard key={item.id} item={item} setEpisode={setEpisode} />
+                                <Ucard key={item.id} item={item} setEpisode={handleSetEpisode} />
                             ))}
                         </Slider>
                     )}
