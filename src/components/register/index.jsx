@@ -71,6 +71,7 @@ function RegisterPage() {
             password: password,
             phoneNumber: phone,
             facebookLink: facebookLink,
+            facebookName: facebookName
         }).then((res) => {
             const result = res.data;
             if (result.status === StatusType.Success) {
