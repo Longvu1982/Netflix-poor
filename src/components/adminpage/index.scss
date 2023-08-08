@@ -11,9 +11,9 @@
     display: flex;
     align-items: start;
     justify-content: center;
+    overflow: scroll;
     @media screen and (max-width: 768px) {
         padding-top: 66px;
-        overflow: scroll;
         height: 100svh;
         padding-bottom: 120px;
     }

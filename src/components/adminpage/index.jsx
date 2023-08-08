@@ -174,7 +174,7 @@ export default function AdminPage() {
                 </div>
                 <Box
                     sx={{
-                        height: 800,
+                        height: "calc(100vh - 180px)",
                         width: "100%",
                         backgroundColor: "#040b1b",
                         color: "#fff",
