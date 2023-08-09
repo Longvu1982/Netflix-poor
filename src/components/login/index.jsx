@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setLoading] = useState(false);
     // handle navigate
     const navigate = useNavigate();
     // login and register
@@ -43,21 +44,27 @@ function LoginPage() {
 
     const handleLogIn = (e) => {
         e.preventDefault();
+        if (isLoading) return;
         if (!handleValidation()) return;
+        setLoading(true);
         AxiosInstance.post("api/login", {
             user: username,
             password: password,
-        }).then((res) => {
-            const result = res.data;
-            if (result.status === StatusType.Success) {
-                userAuth.setUser(res.data);
-                localStorage.setItem("user", JSON.stringify(res.data));
-                dispatchEvent(new Event("storage"));
-                navigate("/upcomming");
-            } else if (result.status === StatusType.Failed) {
-                toast.error(result.description);
-            }
-        });
+        })
+            .then((res) => {
+                const result = res.data;
+                if (result.status === StatusType.Success) {
+                    userAuth.setUser(res.data);
+                    localStorage.setItem("user", JSON.stringify(res.data));
+                    dispatchEvent(new Event("storage"));
+                    navigate("/upcomming");
+                } else if (result.status === StatusType.Failed) {
+                    toast.error(result.description);
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
