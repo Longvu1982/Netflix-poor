@@ -7,8 +7,8 @@
 }
 .register__form {
     width: 100%;
-    min-height: 120vh;
-    min-height: 120svh;
+    min-height: 100vh;
+    min-height: 100svh;
     background-repeat: no-repeat;
     background-position: center;
 		overflow: scroll;
@@ -19,8 +19,8 @@
     align-items: center;
     padding: 0px 10px;
     @media screen and (max-width: 768px) {
-        min-height: 100vh;
-        min-height: 100svh;
+        min-height: 120vh;
+        min-height: 120svh;
     }
     .form__container {
         background-color: rgba(0, 0, 0, 0.64);
