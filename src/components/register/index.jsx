@@ -13,6 +13,7 @@ function RegisterPage() {
     const [facebookLink, setFacebookLink] = useState("");
     const [facebookName, setFacebookName] = useState("");
     const [phone, setPhone] = useState("");
+    const [isLoading, setLoading] = useState(false);
     const [password, setPassword] = useState("");
     const [retypePassword, setRetypePassword] = useState("");
     // handle navigate
@@ -46,7 +47,7 @@ function RegisterPage() {
             toast.error("Invalid Facebook link");
             return false;
         }
-        if (!/^(0|\+84)(3[2-9]|5[2689]|7[06-9]|8[1-689]|9[0-9])[0-9]{7}$/.test(phone)) {
+        if (!/^\d{7,12}$/.test(phone)) {
             toast.error("Invalid phone number");
             return false;
         }
@@ -64,23 +65,31 @@ function RegisterPage() {
     // login and register
     const handleRegister = (e) => {
         e.preventDefault();
+        if (isLoading) return;
         if (!handleValidation()) return;
+        setLoading(true);
         AxiosInstance.post("api/signup", {
             userName: username,
             email: email,
             password: password,
             phoneNumber: phone,
             facebookLink: facebookLink,
-            facebookName: facebookName
-        }).then((res) => {
-            const result = res.data;
-            if (result.status === StatusType.Success) {
-                toast.info("Sign up successful!");
-                navigate("/login");
-            } else if (result.status === StatusType.Failed) {
-                toast.error(result.description);
-            }
-        });
+            facebookName: facebookName,
+        })
+            .then((res) => {
+                const result = res.data;
+                if (result.status === StatusType.Success) {
+                    toast.info("Sign up successful!");
+                    setTimeout(() => {
+                        navigate("/login");
+                    }, 1500);
+                } else if (result.status === StatusType.Failed) {
+                    toast.error(result.description);
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     return (
@@ -121,10 +130,8 @@ function RegisterPage() {
                             onChange={(e) => setRetypePassword(e.target.value)}
                         />
 
-                        <div className="submit__btn--container">
-                            <button type="submit" onClick={handleRegister}>
-                                Register
-                            </button>
+                        <div onClick={handleRegister} className="submit__btn--container">
+                            <button type="submit">Register</button>
                         </div>
                         <div className="form__extra">
                             <span>Already had an account?</span>
