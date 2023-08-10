@@ -46,6 +46,23 @@
             font-size: 18px;
         }
     }
+    .video-res-btns {
+        display: flex;
+        width: 60%;
+        margin-inline: auto;
+        align-items: center;
+        & > * {
+            padding: 5px 15px;
+            cursor: pointer;
+            &.selected {
+                background-color: red;
+            }
+        }
+        @media screen and (max-width: 1200px) {
+            width: 100%;
+            font-size: 18px;
+        }
+    }
     footer {
         margin-top: 200px;
         background-color: black;
