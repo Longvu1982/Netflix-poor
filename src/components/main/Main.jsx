@@ -7,7 +7,9 @@ import "slick-carousel/slick/slick-theme.css";
 import AxiosInstance from "../../axios/axios";
 import PageLoading from "../Loading/PageLoading";
 import SpinnerLoading from "../skeleton";
-import ReactHlsPlayer from "react-hls"
+import ReactHlsPlayer from "react-hls-player";
+
+// Render a YouTube video player
 
 const SampleNextArrow = (props) => {
     const { onClick } = props;
@@ -133,9 +135,9 @@ const MainPage = ({ items, title }) => {
                         src="http://103.45.232.57:1935/vod/mp4:sample.mp4/playlist.m3u8"
                         autoPlay={false}
                         controls={true}
-                        controlsList="nodownload"
                         width="100%"
-                        height="auto"
+                        height="100%"
+                        controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
                     />
                 ) : (

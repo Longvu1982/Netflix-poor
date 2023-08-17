@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Ucard.scss";
-import Image from "../../Images/Image";
 
 const Ucard = ({ item: { description, episode, image, name }, setEpisode }) => {
     return (
