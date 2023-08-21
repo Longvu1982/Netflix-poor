@@ -37,6 +37,7 @@ const MainPage = ({ items, title }) => {
     const [currentMovieInfo, setCurrentMovieInfo] = useState();
     const [currentMovieSrc, setCurrentMovieSrc] = useState();
     const [isLoading, setLoading] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
     const [isMovieLoading, setMovieLoading] = useState(false);
     const [isViewAll, setViewAll] = useState(false);
     const [selectedRes, setSelectedRes] = useState("1080p");
@@ -49,8 +50,8 @@ const MainPage = ({ items, title }) => {
             text: "1080p",
         },
         {
-            id: "480p",
-            text: "480p",
+            id: "720p",
+            text: "720p",
         },
     ];
     const settings = {
@@ -88,12 +89,23 @@ const MainPage = ({ items, title }) => {
         ],
     };
     const handleSetEpisode = (ep) => {
+        videoRef.current.currentTime = 0
+        setCurrentTime(0)
         scrollRef.current?.scrollIntoView({
             behavior: "smooth",
             block: "end",
             inline: "nearest",
         });
         setEpisode(ep);
+    };
+
+    const handleChangeSource = (btn) => {
+        const movieSrcs = currentMovieInfo?.souceVideo;
+        videoRef.current.src = movieSrcs.find((item) => item.id === btn.id)?.url;
+        videoRef.current.currentTime = currentTime;
+        videoRef.current.play();
+        setCurrentMovieSrc(movieSrcs.find((item) => item.id === btn.id)?.url);
+        setSelectedRes(btn.id);
     };
     useEffect(() => {
         setLoading(true);
@@ -114,6 +126,14 @@ const MainPage = ({ items, title }) => {
             .finally(() => setMovieLoading(false));
     }, [episode]);
 
+    React.useEffect(() => {
+        function fireOnVideoStart() {
+            // Do some stuff when the video starts/resumes playing
+        }
+        videoRef?.current?.addEventListener("play", fireOnVideoStart);
+        return videoRef?.current?.removeEventListener("play", fireOnVideoStart);
+    }, [videoRef?.current]);
+
     return isLoading ? (
         <PageLoading />
     ) : (
@@ -122,17 +142,12 @@ const MainPage = ({ items, title }) => {
             <div ref={scrollRef} />
             <div className="video-container">
                 {!isMovieLoading ? (
-                    // <video
-                    //   ref={videoRef}
-                    //   controls
-                    //   onContextMenu={(e) => e.preventDefault()}
-                    //   controlsList="nodownload"
-                    //   width="100%"
-                    //   height="100%"
-                    //   src={currentMovieSrc}
-                    // ></video>
                     <ReactHlsPlayer
-                        src="http://103.45.232.57:1935/vod/mp4:sample.mp4/playlist.m3u8"
+                        onTimeUpdate={(e) => {
+                            setCurrentTime(e.target.currentTime);
+                        }}
+                        playerRef={videoRef}
+                        src={currentMovieSrc}
                         autoPlay={false}
                         controls={true}
                         width="100%"
@@ -146,20 +161,11 @@ const MainPage = ({ items, title }) => {
             </div>
             <div className="video-name">
                 <span style={{ color: "red", fontWeight: 500 }}>EPISODE {currentMovieInfo?.episode}</span>
-                {/* <span> {currentMovieInfo?.name}</span> */}
-                <span> This is test video</span>
+                <span> {currentMovieInfo?.name}</span>
             </div>
             <div className="video-res-btns">
                 {resBtns.map((btn) => (
-                    <div
-                        className={selectedRes === btn.id ? "selected" : ""}
-                        onClick={() => {
-                            const movieSrcs = currentMovieInfo?.souceVideo;
-                            setCurrentMovieSrc(movieSrcs.find((item) => item.id === btn.id)?.url);
-                            setSelectedRes(btn.id);
-                        }}
-                        key={btn.id}
-                    >
+                    <div className={selectedRes === btn.id ? "selected" : ""} onClick={() => handleChangeSource(btn)} key={btn.id}>
                         {btn.text}
                     </div>
                 ))}
