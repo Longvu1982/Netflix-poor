@@ -89,8 +89,8 @@ const MainPage = ({ items, title }) => {
         ],
     };
     const handleSetEpisode = (ep) => {
-        videoRef.current.currentTime = 0
-        setCurrentTime(0)
+        videoRef.current.currentTime = 0;
+        setCurrentTime(0);
         scrollRef.current?.scrollIntoView({
             behavior: "smooth",
             block: "end",
@@ -142,19 +142,26 @@ const MainPage = ({ items, title }) => {
             <div ref={scrollRef} />
             <div className="video-container">
                 {!isMovieLoading ? (
-                    <ReactHlsPlayer
-                        onTimeUpdate={(e) => {
-                            setCurrentTime(e.target.currentTime);
-                        }}
-                        playerRef={videoRef}
-                        src={currentMovieSrc}
-                        autoPlay={false}
-                        controls={true}
-                        width="100%"
-                        height="100%"
-                        controlsList="nodownload"
-                        onContextMenu={(e) => e.preventDefault()}
-                    />
+                    // <ReactHlsPlayer
+                    //     onTimeUpdate={(e) => {
+                    //         setCurrentTime(e.target.currentTime);
+                    //     }}
+                    //     playerRef={videoRef}
+                    //     src={currentMovieSrc}
+                    //     autoPlay={false}
+                    //     controls={true}
+                    //     width="100%"
+                    //     height="100%"
+                    //     controlsList="nodownload"
+                    //     onContextMenu={(e) => e.preventDefault()}
+                    // />
+                    <iframe
+                        title="movie"
+                        style={{ backgroundColor: "#000", width: "100%", height: "100%" }}
+                        src="https://embed.muvi.com/embed/1a9ffafb40ed4a8493a0b5edb9bfe4aa" 
+                        allowFullScreen
+                        allow="encrypted-media"
+                    ></iframe>
                 ) : (
                     <SpinnerLoading />
                 )}
